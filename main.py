@@ -240,9 +240,10 @@ if __name__ == '__main__':
     res = session_sql.execute(query)
     print(*res, sep='\n')
     print('----ORM way----')
-    for item in session_orm.query(Musician).join(Musician.albums).filter(Album.year != 2020).order_by(
+    subquery = session_orm.query(distinct(Musician.name)).join(Musician.albums).filter(Album.year == 2020)
+    for item in session_orm.query(distinct(Musician.name)).filter(~Musician.name.in_(subquery)).order_by(
             Musician.name.asc()):
-        print(f'{item.name}')
+        print(f'{item}')
 
     print('\n11. All collections with musician Steve:')
     query = read_query('queries/select-collection-by-musician.sql').format('Steve')
