@@ -1,4 +1,5 @@
 from operator import and_
+import psycopg2
 import sqlalchemy as sa
 from inc import read_data, clear_db, Genre, Musician, Album, Track, Collection, read_query, Base, create_session
 from sqlalchemy import func, distinct
